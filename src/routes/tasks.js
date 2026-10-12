@@ -25,10 +25,10 @@ router.post('/', (req, res, next) => {
   try {
     const error = validateTaskInput(req.body);
     if (error) return res.status(400).json({ error });
-    const { title, description = null, status = 'todo' } = req.body;
+    const { title, description = null, status = 'todo', priority = 'medium' } = req.body;
     const id = randomUUID();
-    db.prepare('INSERT INTO tasks (id, title, description, status) VALUES (?, ?, ?, ?)')
-      .run(id, title.trim(), description, status);
+    db.prepare('INSERT INTO tasks (id, title, description, status, priority) VALUES (?, ?, ?, ?, ?)')
+      .run(id, title.trim(), description, status, priority);
     res.status(201).json(db.prepare('SELECT * FROM tasks WHERE id = ?').get(id));
   } catch (err) { next(err); }
 });
@@ -51,7 +51,7 @@ router.patch('/:id', (req, res, next) => {
     if (error) return res.status(400).json({ error });
     const fields = [];
     const values = [];
-    for (const key of ['title', 'description', 'status']) {
+    for (const key of ['title', 'description', 'status', 'priority']) {
       if (req.body[key] !== undefined) {
         fields.push(`${key} = ?`);
         values.push(key === 'title' ? req.body[key].trim() : req.body[key]);
