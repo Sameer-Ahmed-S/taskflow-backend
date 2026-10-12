@@ -1,11 +1,12 @@
 // Input validation per spec/contracts/tasks-api.yaml (NFR-1)
 const STATUSES = ['todo', 'in_progress', 'done'];
+const PRIORITIES = ['low', 'medium', 'high']; // spec 001: TaskPriority
 
 export function validateTaskInput(body, { partial = false } = {}) {
   if (typeof body !== 'object' || body === null || Array.isArray(body)) {
     return 'request body must be a JSON object';
   }
-  const allowed = ['title', 'description', 'status'];
+  const allowed = ['title', 'description', 'status', 'priority'];
   for (const key of Object.keys(body)) {
     if (!allowed.includes(key)) return `unknown field: ${key}`;
   }
@@ -24,6 +25,9 @@ export function validateTaskInput(body, { partial = false } = {}) {
   }
   if (body.status !== undefined && !STATUSES.includes(body.status)) {
     return `status must be one of: ${STATUSES.join(', ')}`;
+  }
+  if (body.priority !== undefined && !PRIORITIES.includes(body.priority)) {
+    return `priority must be one of: ${PRIORITIES.join(', ')}`;
   }
   return null;
 }
