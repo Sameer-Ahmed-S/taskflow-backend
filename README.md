@@ -1,18 +1,20 @@
 # taskflow-backend
 
-TaskFlow API — Express + Postgres. Owns the **contract** and hosts the authoritative **spec** in [`/spec`](./spec) (ADR-001).
+TaskFlow API — Express + Postgres. Implements the **contract** defined by the spec (ADR-001).
 
 | Repo | Role |
 |------|------|
 | [taskflow-db](https://github.com/Sameer-Ahmed-S/taskflow-db) | Postgres schema + migrations |
-| **taskflow-backend** (this) | Express API + authoritative spec |
+| **taskflow-backend** (this) | Express API implementing the contract |
 | [taskflow-frontend](https://github.com/Sameer-Ahmed-S/taskflow-frontend) | React SPA |
 
 ## The spec (start here for any change)
 
-- [`spec/requirements.md`](./spec/requirements.md) — entities + functional requirements
-- [`spec/contracts/tasks-api.yaml`](./spec/contracts/tasks-api.yaml) — OpenAPI contract served by this API
-- [`spec/decisions.md`](./spec/decisions.md) — ADRs, including the contract-first change order (ADR-002)
+The authoritative spec is **not in GitHub** — it lives locally at `..\spec\` (relative to this repo, i.e. `taskflow-demo\spec\`):
+
+- `..\spec\requirements.md` — entities + functional requirements
+- `..\spec\contracts\tasks-api.yaml` — OpenAPI contract served by this API
+- `..\spec\decisions.md` — ADRs, including the contract-first change order (ADR-002)
 
 ## Run locally
 
